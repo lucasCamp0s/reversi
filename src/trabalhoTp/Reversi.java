@@ -21,7 +21,7 @@ public class Reversi extends JFrame implements ActionListener {
 			for(int col=0;col<botoes.length;col++) {
 				
 				botoes[lin][col] = new Peca();
-				botoes[lin][col].setName("btn"+(lin)+(col));//acrescentar um para ficar parecido com um tabuleiro real
+				botoes[lin][col].setName("btn"+(lin)+(col));
 				botoes[lin][col].setEstado(Estado.VAZIO);
 				getContentPane().add(botoes[lin][col]);
 				botoes[lin][col].addActionListener(this);
@@ -58,17 +58,20 @@ public class Reversi extends JFrame implements ActionListener {
 		Tabuleiro regras = new Tabuleiro();
 		
 		
-		
+		if(/*regras.procuraPecaVertical(linha, coluna, botoes,player)==true || regras.procuraPecaHorizonatal( linha, coluna,botoes,player)==true*/regras.procuraPecaDiagonal(linha, coluna,botoes,player)) {
 		if(player == Estado.PRETO) {
 			btn.setEstado(Estado.PRETO);
 			player = Estado.BRANCO;
 			btn.removeActionListener(this);
+			getContentPane().repaint();
 		}else {
 			btn.setEstado(Estado.BRANCO);
 			player=Estado.PRETO;			
 			btn.removeActionListener(this);
+			getContentPane().repaint();
+		}
 	}
-		regras.procuraPecaVertical(linha, coluna, botoes,player);
+		
 	}
 	public static void main(String[] args) {
 		new Reversi();

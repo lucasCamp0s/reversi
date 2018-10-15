@@ -14,56 +14,113 @@ deve roubar peças do jogador adversário a partir da quinta jogada.
  * */
 public class Tabuleiro {
 	
+	private boolean tipoRetorno=false;
 	// btn[lin][col].getEstado()  tirado do if
-	public void procuraPecaVertical(int lin,int col,Peca btn[][],Estado player) {
+	public boolean procuraPecaVertical(int lin,int col,Peca btn[][],Estado player) {
+
+		Estado oponente = player;
+		//para inverter a cor para pintar os btn 
 		
-			 Estado oponente = player;
-			//para inverter a cor para pintar os btn 
-			
-			 if(oponente == Estado.PRETO) {					
-					oponente = Estado.BRANCO;
-					
-				}else {
-					oponente=Estado.PRETO;			
-					
-			}
-			 
-			//comparacao com o parte de cima do tabuleiro
-			for(int linha=lin-1;linha>=0;linha--) {
-				if(btn[lin][col].getEstado() == btn[linha][col].getEstado() && (btn[linha][col].getEstado() != Estado.VAZIO)) {
+		
+		tipoRetorno = false;
+		for(int desce = 0; desce <=6;desce++) {
+			if(lin == 7) {
+				if(btn[lin][col].getEstado() == oponente || btn[lin][col].getEstado() == Estado.VAZIO)
 					break;
-					
-				}else {
-					if(btn[linha][col].getEstado() != Estado.VAZIO ) {
-					System.out.println("positions find " + linha + " " + col);
-					System.out.println(btn[linha][col].getEstado());
-					System.out.println(linha + " " + col);
-					System.out.println();
-					//btn[linha][col].setEstado(oponente);
-					}
-				}
 			}
-			//comparacao com a parte de baixo do tabuleiro
-			for(int linha=lin+1;linha<=7;linha++) {
-				if(btn[lin][col].getEstado() == btn[linha][col].getEstado() && (btn[linha][col].getEstado() != Estado.VAZIO)) {
+			if(btn[lin+1][col].getEstado() == oponente || btn[lin+1][col].getEstado() == Estado.VAZIO)
+				break;
+			if(btn[desce][col].getEstado() != Estado.VAZIO) {
+				//btn[desce][col].setEstado(oponente);
+			//System.out.println(btn[desce][col].getName());
+			tipoRetorno = true;
+			}
+		
+		}
+		for(int sobe=6;sobe>=1;sobe--) {
+			if(lin==0)
+				lin=1;
+			if(btn[lin-1][col].getEstado() == oponente || btn[lin-1][col].getEstado() == Estado.VAZIO)
+				break;
+			if(btn[sobe][col].getEstado() != Estado.VAZIO) {
+				//System.out.println(btn[sobe][col].getName());
+				//btn[sobe][col].setEstado(oponente);
+				tipoRetorno = true;
+			}
+		}
+		
+		return tipoRetorno;
+
+	}
+
+	public boolean procuraPecaHorizonatal(int lin,int col,Peca btn[][],Estado player) {
+
+		Estado oponente = player;
+		//para inverter a cor para pintar os btn 
+		
+		
+		tipoRetorno = false;
+		for(int esquerda=0;esquerda <=6;esquerda++) {
+			if(col==7)
+				if(btn[lin][col].getEstado() == oponente || btn[lin][col].getEstado() == Estado.VAZIO)
 					break;
-					
-				}else {
-					if(btn[linha][col].getEstado() != Estado.VAZIO ) {
-					System.out.println("positions find " + linha + " " + col);
-					System.out.println(btn[linha][col].getEstado());
-					System.out.println(linha + " " + col);
-					System.out.println();
-					//btn[linha][col].setEstado(oponente);
-					}
+			if(btn[lin][col+1].getEstado() == Estado.VAZIO || btn[lin][col+1].getEstado() == oponente)
+				break;
+			else {
+				if(btn[lin][esquerda].getEstado() != Estado.VAZIO) {
+				System.out.println(btn[lin][esquerda].getName());
+				//btn[lin][esquerda].setEstado(oponente);
+			tipoRetorno = true;
 				}
 			}
 		}
-	
-	
-	
-	
 		
+		for(int direita=6;direita>=1;direita--){
+			if(col==0) {
+				if(btn[lin][col+1].getEstado() == oponente || btn[lin][col+1].getEstado() == Estado.VAZIO)
+					break;
+				else {
+					col=1;
+				}
+			}
+			if(btn[lin][col-1].getEstado() == Estado.VAZIO || btn[lin][col-1].getEstado() == oponente)  {
+				break;
+			}else {
+				if(btn[lin][direita].getEstado() != Estado.VAZIO) {
+				System.out.println(btn[lin][direita].getName());
+				//btn[lin][direita].setEstado(oponente);
+				tipoRetorno = true;
+				}
+			}
+			
+		}
+		
+		return tipoRetorno;
+
 	}
+
+	public boolean procuraPecaDiagonal(int lin,int col,Peca btn[][],Estado player) {
+		
+		tipoRetorno = false;
+		
+		
+		
+		int coluna=col;
+		for(int diagonal = lin;coluna <= 7 || lin<=6;diagonal++,lin++,col++) {
+			
+			System.out.println(btn[lin][coluna].getName());
+			coluna++;
+			
+			tipoRetorno=true;
+		}
+		
+		
+		return tipoRetorno;
+	}
+
+
+
+
+}
 
 
