@@ -23,29 +23,39 @@ public class Tabuleiro {
 		
 		
 		tipoRetorno = false;
-		for(int desce = 0; desce <=6;desce++) {
-			if(lin == 7) {
-				if(btn[lin][col].getEstado() == oponente || btn[lin][col].getEstado() == Estado.VAZIO)
-					break;
-			}
-			if(btn[lin+1][col].getEstado() == oponente || btn[lin+1][col].getEstado() == Estado.VAZIO)
+	
+	
+		for (int c = lin; c < btn.length-1; c++) {
+			if(btn[lin+1][col].getEstado() == oponente || btn[lin+1][col].getEstado() == Estado.VAZIO )
 				break;
-			if(btn[desce][col].getEstado() != Estado.VAZIO) {
-				//btn[desce][col].setEstado(oponente);
-			//System.out.println(btn[desce][col].getName());
-			tipoRetorno = true;
-			}
-		
-		}
-		for(int sobe=6;sobe>=1;sobe--) {
-			if(lin==0)
-				lin=1;
-			if(btn[lin-1][col].getEstado() == oponente || btn[lin-1][col].getEstado() == Estado.VAZIO)
-				break;
-			if(btn[sobe][col].getEstado() != Estado.VAZIO) {
-				//System.out.println(btn[sobe][col].getName());
-				//btn[sobe][col].setEstado(oponente);
+			if(btn[lin+1][col].getEstado() != oponente)
 				tipoRetorno = true;
+			if(oponente == btn[c][col].getEstado())  {
+				
+				System.out.println("Achei");
+				System.out.println(btn[c][col].getEstado()+"\n" + btn[c][col].getName());
+				for (int j = c; j > lin; j--) {
+					btn[j][col].setEstado(oponente);
+				}
+				tipoRetorno = true;
+				break;
+			}
+		}
+		//para conferir descendo programa
+		for (int d = lin; d >0; d--) {
+			if(btn[lin-1][col].getEstado() == oponente || btn[lin-1][col].getEstado() == Estado.VAZIO )
+				break;
+			if(btn[lin-1][col].getEstado() != oponente)
+				tipoRetorno = true;
+			if(oponente == btn[d][col].getEstado()) {
+				
+				System.out.println("Achei");
+				System.out.println(btn[d][col].getEstado()+"\n" + btn[d][col].getName());
+				for (int j1 = d; j1 < lin; j1++) {
+					btn[j1][col].setEstado(oponente);
+				}
+				tipoRetorno = true;
+				break;
 			}
 		}
 		
@@ -55,45 +65,50 @@ public class Tabuleiro {
 
 	public boolean procuraPecaHorizonatal(int lin,int col,Peca btn[][],Estado player) {
 
-		Estado oponente = player;
+		Estado oponente =player;
 		//para inverter a cor para pintar os btn 
-		
-		
 		tipoRetorno = false;
-		for(int esquerda=0;esquerda <=6;esquerda++) {
-			if(col==7)
-				if(btn[lin][col].getEstado() == oponente || btn[lin][col].getEstado() == Estado.VAZIO)
-					break;
+		for(int coluna = col;coluna < btn.length-1;coluna++) {
 			if(btn[lin][col+1].getEstado() == Estado.VAZIO || btn[lin][col+1].getEstado() == oponente)
 				break;
-			else {
-				if(btn[lin][esquerda].getEstado() != Estado.VAZIO) {
-				System.out.println(btn[lin][esquerda].getName());
-				//btn[lin][esquerda].setEstado(oponente);
-			tipoRetorno = true;
+			if(btn[lin][col+1].getEstado() != oponente)
+				tipoRetorno = true;
+			if(oponente == btn[lin][coluna].getEstado()) {
+				System.out.println("Achei");
+				//System.out.println(lin  + "" + coluna);
+				for(int j2 = coluna;j2>col;j2--) {
+					System.out.println(btn[lin][j2].getName() + " voltando");
+					btn[lin][j2].setEstado(oponente);
 				}
+				
+				tipoRetorno = true;
+				break;
 			}
+		}
+		// fazendo a parte de voltar
+		for(int coluna = col;coluna >0 ;coluna--) {
+			if(btn[lin][col-1].getEstado() == Estado.VAZIO || btn[lin][col-1].getEstado() == oponente)
+				break;
+			if(btn[lin][col-1].getEstado() != oponente)
+				tipoRetorno = true;
+			if(oponente == btn[lin][coluna].getEstado()) {
+				System.out.println("Achei");
+				//System.out.println(lin  + "" + coluna);
+				for(int j2 = coluna;j2<col;j2++) {
+					System.out.println(btn[lin][j2].getName() + " voltando");
+					btn[lin][j2].setEstado(oponente);
+				
+				}
+			
+				tipoRetorno = true;
+				break;
+				
+			}
+		
 		}
 		
-		for(int direita=6;direita>=1;direita--){
-			if(col==0) {
-				if(btn[lin][col+1].getEstado() == oponente || btn[lin][col+1].getEstado() == Estado.VAZIO)
-					break;
-				else {
-					col=1;
-				}
-			}
-			if(btn[lin][col-1].getEstado() == Estado.VAZIO || btn[lin][col-1].getEstado() == oponente)  {
-				break;
-			}else {
-				if(btn[lin][direita].getEstado() != Estado.VAZIO) {
-				System.out.println(btn[lin][direita].getName());
-				//btn[lin][direita].setEstado(oponente);
-				tipoRetorno = true;
-				}
-			}
-			
-		}
+		
+		
 		
 		return tipoRetorno;
 
